@@ -13,7 +13,8 @@ class BooksApp extends React.Component {
      * pages, as well as provide a good URL they can bookmark and share.
      */
     showSearchPage: false,
-    books: []
+    books: [],
+    value : ''
   };
 
   componentDidMount() {
@@ -24,6 +25,10 @@ class BooksApp extends React.Component {
       }))
     })
   };
+
+  handleChange = event => (
+    this.setState({value: event.target.value})
+  )
 
   render() {
     const { books } = this.state;
@@ -62,7 +67,7 @@ class BooksApp extends React.Component {
           <div>
             <div className="list-books-content">
               <div>
-                  <Bookshelf books={currentlyReading}/>
+                  <Bookshelf books={currentlyReading} handleChange={this.handleChange}/>
                   <Bookshelf books={wantToRead}/>
                   <Bookshelf books={read}/>
                 </div>

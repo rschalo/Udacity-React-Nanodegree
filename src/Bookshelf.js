@@ -15,8 +15,9 @@ class Bookshelf extends Component {
     <option value="read">Read</option>
     <option value="none">None</option>
   </select>*/
+
   render() {
-    const { books } = this.props;
+    const { books, handleChange } = this.props;
 
     return (
       <div className="bookshelf">
@@ -33,13 +34,11 @@ class Bookshelf extends Component {
                       alt="Book cover"
                     />
                     <div className="book-shelf-changer">
-                      <select id='assignNewShelf' value={this.state.value}>
+                      <select id='assignNewShelf' onChange={handleChange}>
                         <option value="move" disabled>
                           Move to...
                         </option>
-                        <option value="currentlyReading">
-                          Currently Reading
-                        </option>
+                        <option value="currentlyReading">Currently Reading</option>
                         <option value="wantToRead">Want to Read</option>
                         <option value="read">Read</option>
                         <option value="none">None</option>
