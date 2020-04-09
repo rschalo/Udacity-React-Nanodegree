@@ -29,6 +29,7 @@ class BooksApp extends React.Component {
   handleChange = event => (
     this.setState({value: event.target.value})
   )
+  // TODO: implement the API update method here to update books.shelf
 
   render() {
     const { books } = this.state;
