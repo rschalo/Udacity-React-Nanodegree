@@ -17,11 +17,10 @@ class Bookshelf extends Component {
   </select>*/
 
   render() {
-    const { books, handleChange } = this.props;
-
+    const { books, handleChange, bookshelfName } = this.props;
     return (
       <div className="bookshelf">
-        <h2 className="bookshelf-title">Currently Reading</h2>
+        <h2 className="bookshelf-title">{bookshelfName}</h2>
         <div className="bookshelf-books">
           <ol className="books-grid">
             {books.map((book) => (

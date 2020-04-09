@@ -68,9 +68,9 @@ class BooksApp extends React.Component {
           <div>
             <div className="list-books-content">
               <div>
-                  <Bookshelf books={currentlyReading} handleChange={this.handleChange}/>
-                  <Bookshelf books={wantToRead} handleChange={this.handleChange}/>
-                  <Bookshelf books={read} handleChange={this.handleChange}/>
+                  <Bookshelf bookshelfName={'Currently Reading'} books={currentlyReading} handleChange={this.handleChange}/>
+                  <Bookshelf bookshelfName={'Want to Read'} books={wantToRead} handleChange={this.handleChange}/>
+                  <Bookshelf bookshelfName={'Have Read'} books={read} handleChange={this.handleChange}/>
                 </div>
               </div>
             </div>
