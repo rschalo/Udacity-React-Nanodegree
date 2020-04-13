@@ -39,6 +39,7 @@ class BooksApp extends React.Component {
     booksArray.push(bookToUpdate);
     // updates the state with new books array
     this.setState({ books: booksArray });
+    BooksAPI.update(bookToUpdate, value);
   };
 
 
