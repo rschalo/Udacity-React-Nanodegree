@@ -13,8 +13,7 @@ class BooksApp extends React.Component {
      * pages, as well as provide a good URL they can bookmark and share.
      */
     showSearchPage: false,
-    books: [],
-    value : ''
+    books: []
   };
 
   componentDidMount() {
@@ -25,11 +24,23 @@ class BooksApp extends React.Component {
       }))
     })
   };
+  // Callback from Bookshelf <select sortBooks> happens here
+  sortBooks = (event, book) => {
+    const { books } = this.state;
+    // value the user selected
+    const { value } = event.target;
+    // gets the book we want to update
+    const bookToUpdate = books.filter(b => b.id === book.id)[0];
+    // updates the shelf property with the selected value
+    bookToUpdate.shelf = value;
+    // gets the old book array, and omit the old book value
+    const booksArray = books.filter(b => b.id !== book.id);
+    // push the updated book into the "new" books array, and update state
+    booksArray.push(bookToUpdate);
+    // updates the state with new books array
+    this.setState({ books: booksArray });
+  };
 
-  handleChange = event => (
-    this.setState({value: event.target.value})
-  )
-  // TODO: implement the API update method here to update books.shelf
 
   render() {
     const { books } = this.state;
@@ -68,9 +79,21 @@ class BooksApp extends React.Component {
           <div>
             <div className="list-books-content">
               <div>
-                  <Bookshelf bookshelfName={'Currently Reading'} books={currentlyReading} handleChange={this.handleChange}/>
-                  <Bookshelf bookshelfName={'Want to Read'} books={wantToRead} handleChange={this.handleChange}/>
-                  <Bookshelf bookshelfName={'Have Read'} books={read} handleChange={this.handleChange}/>
+                  <Bookshelf 
+                    bookshelfName={'Currently Reading'} 
+                    books={currentlyReading} 
+                    sortBooks={this.sortBooks}
+                    />
+                  <Bookshelf 
+                    bookshelfName={'Want to Read'} 
+                    books={wantToRead} 
+                    sortBooks={this.sortBooks}
+                  />
+                  <Bookshelf 
+                    bookshelfName={'Have Read'} 
+                    books={read} 
+                    sortBooks={this.sortBooks}
+                  />
                 </div>
               </div>
             </div>

@@ -1,23 +1,16 @@
 import React, { Component } from "react";
 
 class Bookshelf extends Component {
-  //what if I do a filter map for this in the component?
-  //bookshelf doesn't need to be state but there needs to be a setState(books.shelf)
+    
+  //bookshelf doesn't need state but there needs to be a setState(books.shelf)
   //shelf in db is set to one of: currentlyReading, wantToRead, read
   //change shelf should be a button or 'sub'component that sets that state
   //bookshelf list will simply show books mapped to shelf, no state required
   //books passed in as props
-  /*TODO add button that allows the changing of book.shelf
-  <select>
-    <option value="move" disabled>Move to...</option>
-    <option value="currentlyReading">Currently Reading</option>
-    <option value="wantToRead">Want to Read</option>
-    <option value="read">Read</option>
-    <option value="none">None</option>
-  </select>*/
+  
 
   render() {
-    const { books, handleChange, bookshelfName } = this.props;
+    const { books, bookshelfName } = this.props;
     return (
       <div className="bookshelf">
         <h2 className="bookshelf-title">{bookshelfName}</h2>
@@ -25,7 +18,7 @@ class Bookshelf extends Component {
           <ol className="books-grid">
             {books.map((book) => (
               <li>
-                <div key={book.title} className="book">
+                <div key={book.id} className="book">
                   <div className="book-top">
                     <img
                       src={book.imageLinks.thumbnail}
@@ -33,10 +26,13 @@ class Bookshelf extends Component {
                       alt="Book cover"
                     />
                     <div className="book-shelf-changer">
-                      <select id='assignNewShelf' onChange={handleChange}>
-                        <option value="move" disabled>
-                          Move to...
-                        </option>
+                      {/* https://github.com/facebook/react/issues/2803#issuecomment-314426759 for handling a disabled select tag option*/}
+                      {/* Default options, like "Move..." need to have a value equal to the valid empty state for the select. That way, React can associate the value attribute of the select and option tag to know what should be selected.*/}
+                      <select 
+                        defaultValue="" 
+                        onChange={ event => this.props.sortBooks(event, book)}
+                      >
+                        <option value="" disabled>Move...</option>
                         <option value="currentlyReading">Currently Reading</option>
                         <option value="wantToRead">Want to Read</option>
                         <option value="read">Read</option>
