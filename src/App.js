@@ -1,8 +1,9 @@
-import React from 'react'
-// import * as BooksAPI from './BooksAPI'
-import './App.css'
+import React from 'react';
+import './App.css';
 import * as BooksAPI from './BooksAPI';
-import Bookshelf from './Bookshelf';
+import Bookshelves from './Bookshelves';
+import Search from './Search.js';
+import { Route } from 'react-router-dom';
 
 class BooksApp extends React.Component {
   state = {
@@ -17,13 +18,12 @@ class BooksApp extends React.Component {
   };
 
   componentDidMount() {
-    BooksAPI.getAll()
-    .then((books) => {
+    BooksAPI.getAll().then(books => {
       this.setState(() => ({
         books
-      }))
-    })
-  };
+      }));
+    });
+  }
   // Callback from Bookshelf <select sortBooks> happens here
   sortBooks = (event, book) => {
     const { books } = this.state;
@@ -41,73 +41,36 @@ class BooksApp extends React.Component {
     this.setState({ books: booksArray });
     // update the database for data persistence
     BooksAPI.update(bookToUpdate, value);
-    console.log(`${book} was updated to ${value}`)
   };
-
 
   render() {
     const { books } = this.state;
-    const currentlyReading = books.filter((b) => b.shelf === 'currentlyReading');
-    const wantToRead = books.filter((b) => b.shelf === 'wantToRead');
-    const read = books.filter((b) => b.shelf === 'read');
+    // filter out books by their state.book.shelf and pass as props
+    const currentlyReading = books.filter(b => b.shelf === 'currentlyReading');
+    const wantToRead = books.filter(b => b.shelf === 'wantToRead');
+    const read = books.filter(b => b.shelf === 'read');
 
     return (
       <div className='app'>
-        {this.state.showSearchPage ? (
-          <div className='search-books'>
-            <div className='search-books-bar'>
-              <button className='close-search' onClick={() => this.setState({ showSearchPage: false })}>Close</button>
-              <div className='search-books-input-wrapper'>
-                {/*
-                  NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                  You can find these search terms here:
-                  https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-                  However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                  you don't find a specific author or title. Every search is limited by search terms.
-                */}
-                <input type='text' placeholder='Search by title or author'/>
-
-              </div>
-            </div>
-            <div className='search-books-results'>
-              <ol className='books-grid'></ol>
-            </div>
-          </div>
-        ) : (
-          <div className='list-books'>
-            <div className='list-books-title'>
-              <h1>MyReads</h1>
-            </div>
-          <div>
-            <div className='list-books-content'>
-              <div>
-                  <Bookshelf 
-                    bookshelfName={'Currently Reading'} 
-                    books={currentlyReading} 
-                    sortBooks={this.sortBooks}
-                    />
-                  <Bookshelf 
-                    bookshelfName={'Want to Read'} 
-                    books={wantToRead} 
-                    sortBooks={this.sortBooks}
-                  />
-                  <Bookshelf 
-                    bookshelfName={'Have Read'} 
-                    books={read} 
-                    sortBooks={this.sortBooks}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className='open-search'>
-              <button onClick={() => this.setState({ showSearchPage: true })}>Add a book</button>
-            </div>
-          </div>
-        )}
+        <Route
+          exact
+          path='/'
+          render={() => (
+            <Bookshelves
+              currentlyReading={currentlyReading}
+              wantToRead={wantToRead}
+              read={read}
+              sortBooks={this.sortBooks}
+            />
+          )}
+        />
+        <Route
+          path='/search'
+          component={Search} 
+        />
       </div>
-    )
+    );
   }
 }
 
-export default BooksApp
+export default BooksApp;
