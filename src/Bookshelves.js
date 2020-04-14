@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Bookshelf from './Bookshelf';
+import { Link } from 'react-router-dom';
 
 class Bookshelves extends Component {
   render() {
@@ -28,6 +29,12 @@ class Bookshelves extends Component {
                   sortBooks={this.props.sortBooks}
                 />
               </div>
+                <Link
+                  to='/search'
+                  className='open-search'
+                >
+                  <button>Add a Book</button>
+                </Link>
             </div>
           </div>
         </div>
