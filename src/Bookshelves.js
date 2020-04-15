@@ -32,6 +32,7 @@ class Bookshelves extends Component {
                 <Link
                   to='/search'
                   className='open-search'
+                  sortBooks={this.sortBooks}
                 >
                   <button>Add a Book</button>
                 </Link>
