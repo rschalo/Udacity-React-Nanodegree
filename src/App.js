@@ -14,16 +14,19 @@ class BooksApp extends React.Component {
      * pages, as well as provide a good URL they can bookmark and share.
      */
     showSearchPage: false,
-    books: []
+    books: [],
+    isLoaded: false
   };
 
   componentDidMount() {
     BooksAPI.getAll().then(books => {
       this.setState(() => ({
-        books
-      }));
+        books: books,
+        isLoaded: true
+      }))
     });
   }
+
   // Callback from Bookshelf <select sortBooks> happens here
   sortBooks = (event, book) => {
     const { books } = this.state;
@@ -66,7 +69,11 @@ class BooksApp extends React.Component {
         />
         <Route
           path='/search'
-          component={Search} 
+          render={() => (
+            <Search
+              sortBooks={this.sortBooks}
+            />
+          )}
         />
       </div>
     );
