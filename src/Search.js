@@ -1,22 +1,53 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import * as BooksAPI from './BooksAPI';
 
 class Search extends Component {
   state = {
-    query: ''
+    query: '',
+    results: []
   };
   // used as callback will update the input field live
   updateQuery = query => {
     this.setState(() => ({
       query: query
     }));
+    if (this.state.query && this.state.query.length > 1) {
+      this.getInfo();
+    }
   };
 
+  updateResults = results => {
+    this.setState(() => ({
+      results: results
+    }));
+  };
+  
+  getInfo = () => {
+    BooksAPI.search(this.state.query).then(books => {
+      this.setState(() => ({
+        results: books
+      }));
+    });
+  };
+  
   clearQuery = () => {
     this.updateQuery('');
+    this.updateResults([]);
   };
+
+  componentDidMount() {
+    BooksAPI.getAll().then(books => {
+      this.setState(() => ({
+        books: books,
+        isLoaded: true
+      }))
+    });
+  }
+
   render() {
-    const { query } = this.state;
+    const { query, results } = this.state;
+    console.log(typeof(results));
 
     return (
       <div className='search-books'>
@@ -41,10 +72,41 @@ class Search extends Component {
               onChange={event => this.updateQuery(event.target.value)}
             />
           </div>
-          <button className='clear-search-button' onClick={this.clearQuery}>Clear Search Bar</button>
+          <button className='clear-search' onClick={this.clearQuery}>
+          </button>
         </div>
         <div className='search-books-results'>
-          <ol className='books-grid' />
+          <ol className='books-grid'>
+            {results.length > 0 &&
+              results.map(book => (
+                <li key={book.id}>
+                  <div className='book'>
+                    <div className='book-top'>
+                      <div className='book-shelf-changer'>
+                        {/* https://github.com/facebook/react/issues/2803#issuecomment-314426759 for handling a disabled select tag option*/}
+                        {/* Default options, like 'Move...' need to have a value equal to the valid empty state for the select. That way, React can associate the value attribute of the select and option tag to know what should be selected.*/}
+                        <select
+                          defaultValue=''
+                          onChange={event => this.props.sortBooks(event, book)}
+                        >
+                          <option value='' disabled>
+                            Move...
+                          </option>
+                          <option value='currentlyReading'>
+                            Currently Reading
+                          </option>
+                          <option value='wantToRead'>Want to Read</option>
+                          <option value='read'>Read</option>
+                          <option value='none'>None</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div className='book-title'>{`${book.title}`}</div>
+                    <div className='book-authors'>{`${book.authors}`}</div>
+                  </div>
+                </li>
+              ))}
+          </ol>
         </div>
       </div>
     );
