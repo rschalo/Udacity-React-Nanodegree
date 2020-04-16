@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import BookshelfChanger from './BookshelfChanger';
+import Book from './Book';
 
 class Bookshelf extends Component {
   //bookshelf doesn't need state but there needs to be a setState(books.shelf)
@@ -9,33 +9,24 @@ class Bookshelf extends Component {
   //books passed in as props
 
   render() {
-    const { books, sortBooks, bookshelfName, shelf } = this.props;
+    const { books, sortBooks, bookshelfName } = this.props;
 
     return (
       <div className='bookshelf'>
         <h2 className='bookshelf-title'>{bookshelfName}</h2>
         <div className='bookshelf-books'>
           <ol className='books-grid'>
-            {books.map(book => (
-              <li key={book.id}>
-                <div className='book'>
-                  <div className='book-top'>
-                    <img
-                      src={book.imageLinks.thumbnail}
-                      className='book-cover'
-                      alt='Book cover'
-                    />
-                    <BookshelfChanger
-                      sortBooks={sortBooks}
-                      book={book}
-                      shelf={shelf}
-                    />
-                  </div>
-                  <div className='book-title'>{book.title}</div>
-                  <div className='book-authors'>{book.authors.join(', ')}</div>
-                </div>
-              </li>
-            ))}
+              {(books.length > 0 && books !== undefined) ? 
+                books.map(book => (
+                <Book
+                  key={book.id}
+                  book={book}
+                  shelf={book.shelf ? book.shelf : 'none'}
+                  sortBooks={sortBooks}
+                />
+                )) : 
+                <div></div>
+              }
           </ol>
         </div>
       </div>
