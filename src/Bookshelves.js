@@ -17,22 +17,24 @@ class Bookshelves extends Component {
                   bookshelfName={'Currently Reading'}
                   books={this.props.currentlyReading}
                   sortBooks={this.props.sortBooks}
+                  shelf={'currentlyReading'}
                 />
                 <Bookshelf
                   bookshelfName={'Want to Read'}
                   books={this.props.wantToRead}
                   sortBooks={this.props.sortBooks}
+                  shelf={'wantToRead'}
                 />
                 <Bookshelf
                   bookshelfName={'Have Read'}
                   books={this.props.read}
                   sortBooks={this.props.sortBooks}
+                  shelf={'haveRead'}
                 />
               </div>
                 <Link
                   to='/search'
                   className='open-search'
-                  sortBooks={this.sortBooks}
                 >
                   <button>Add a Book</button>
                 </Link>
