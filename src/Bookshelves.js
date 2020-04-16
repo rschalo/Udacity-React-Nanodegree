@@ -32,12 +32,9 @@ class Bookshelves extends Component {
                   shelf={'haveRead'}
                 />
               </div>
-                <Link
-                  to='/search'
-                  className='open-search'
-                >
-                  <button>Add a Book</button>
-                </Link>
+              <Link to='/search' className='open-search'>
+                <button>Add a Book</button>
+              </Link>
             </div>
           </div>
         </div>

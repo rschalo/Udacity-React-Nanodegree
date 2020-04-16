@@ -4,7 +4,7 @@ import SearchResults from './SearchResults';
 
 class Search extends Component {
   state = {
-    query: ''
+    query: '',
   };
 
   //TODO: move searchbooks into app.js
@@ -15,21 +15,18 @@ class Search extends Component {
   */
   // TODO: let's rewrite how searchbooks is defined in app.js
   //searchBooks is receiving an undefined value and catching on .map
-  handleChange = e => {
+  handleChange = (e) => {
     const value = e.target.value;
     if (value.length > 0) {
       this.setState({ query: value }, () => {
         this.props.searchNewBooks(value);
-    });
+      });
     } else {
-      this.setState({ query: ''}, () => {
-        this.props.searchNewBooks(this.state.query)
-      })
+      this.setState({ query: '' }, () => {
+        this.props.searchNewBooks(this.state.query);
+      });
     }
-    
   };
-  
-  
 
   render() {
     const { query } = this.state;

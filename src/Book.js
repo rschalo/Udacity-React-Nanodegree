@@ -9,12 +9,14 @@ class Book extends Component {
       <li>
         <div className='book'>
           <div className='book-top'>
-            <div className='book-cover'
-            style={{
-              width: 128,
-              height: 193,
-              backgroundImage: `url(${book.imageLinks && book.imageLinks.thumbnail})`
-            }}
+            <div
+              className='book-cover'
+              style={{
+                width: 128,
+                height: 193,
+                backgroundImage: `url(${book.imageLinks &&
+                  book.imageLinks.thumbnail})`,
+              }}
             />
             <BookshelfChanger sortBooks={sortBooks} book={book} shelf={shelf} />
           </div>
