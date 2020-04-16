@@ -6,15 +6,10 @@ class Search extends Component {
   state = {
     query: '',
   };
-
-  //TODO: move searchbooks into app.js
-
   /*
   lifts searchbooks to app, now pass state with
   searchbooks back down and pass to a search results component
   */
-  // TODO: let's rewrite how searchbooks is defined in app.js
-  //searchBooks is receiving an undefined value and catching on .map
   handleChange = (e) => {
     const value = e.target.value;
     if (value.length > 0) {
