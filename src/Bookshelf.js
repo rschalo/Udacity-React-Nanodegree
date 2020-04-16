@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import BookshelfChanger from './BookshelfChanger';
 
 class Bookshelf extends Component {
   //bookshelf doesn't need state but there needs to be a setState(books.shelf)
@@ -8,7 +9,7 @@ class Bookshelf extends Component {
   //books passed in as props
 
   render() {
-    const { books, bookshelfName } = this.props;
+    const { books, sortBooks, bookshelfName, shelf } = this.props;
 
     return (
       <div className='bookshelf'>
@@ -24,28 +25,14 @@ class Bookshelf extends Component {
                       className='book-cover'
                       alt='Book cover'
                     />
-                    <div className='book-shelf-changer'>
-                      {/* https://github.com/facebook/react/issues/2803#issuecomment-314426759 for handling a disabled select tag option*/}
-                      {/* Default options, like 'Move...' need to have a value equal to the valid empty state for the select. That way, React can associate the value attribute of the select and option tag to know what should be selected.*/}
-                      <select
-                        defaultValue=''
-                        onChange={event => this.props.sortBooks(event, book)}
-                      >
-                        <option value='' disabled>
-                          Move...
-                        </option>
-                        <option value='currentlyReading'>
-                          Currently Reading
-                        </option>
-                        <option value='wantToRead'>Want to Read</option>
-                        <option value='read'>Read</option>
-                        <option value='none'>None</option>
-                      </select>
-                    </div>
+                    <BookshelfChanger
+                      sortBooks={sortBooks}
+                      book={book}
+                      shelf={shelf}
+                    />
                   </div>
-
-                  <div className='book-title'>{`${book.title}`}</div>
-                  <div className='book-authors'>{`${book.authors}`}</div>
+                  <div className='book-title'>{book.title}</div>
+                  <div className='book-authors'>{book.authors.join(', ')}</div>
                 </div>
               </li>
             ))}
