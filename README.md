@@ -19,3 +19,7 @@ To run the project, please use npm start. A server should start on localhost:300
 How to manage state across numerous components and split components into smaller, reusable components.
 Use API calls to populate state with data and update it based on user inputs.
 Utilize 'react-router-dom' to create a SPA with Route and Link components.
+
+# Misc Notes:
+
+This project uses Node v10.16.3
